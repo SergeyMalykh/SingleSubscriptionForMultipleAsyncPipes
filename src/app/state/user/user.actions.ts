@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { User } from '@state/user/user.model';
-
 export enum UserActionTypes {
   LoadUsers = '[User] Load Users',
   AddUser = '[User] Add User',
@@ -14,6 +12,8 @@ export enum UserActionTypes {
   DeleteUsers = '[User] Delete Users',
   ClearUsers = '[User] Clear Users'
 }
+
+import { User } from './user.model';
 
 export class LoadUsers implements Action {
   readonly type = UserActionTypes.LoadUsers;

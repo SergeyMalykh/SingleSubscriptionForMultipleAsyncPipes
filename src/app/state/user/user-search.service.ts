@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, combineLatest } from 'rxjs';
-import { User } from '@state/user/user.model';
+import { EntityState } from '@ngrx/entity';
 import { HttpClient } from '@angular/common/http';
 import {
   switchMap,
@@ -17,9 +17,10 @@ import {
   createFeatureSelector,
   createSelector
 } from '@ngrx/store';
-import * as entityReducer from '@state/user/user.reducer';
-import { EntityState } from '@ngrx/entity';
-import { UpsertUsers } from '@state/user/user.actions';
+
+import * as entityReducer from './user.reducer';
+import { User } from './user.model';
+import { UpsertUsers } from './user.actions';
 
 @Injectable({
   providedIn: 'root'
