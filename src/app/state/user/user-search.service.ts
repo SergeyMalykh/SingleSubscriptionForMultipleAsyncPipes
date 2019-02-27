@@ -1,26 +1,86 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 import { User } from './user.model';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, distinctUntilChanged, share } from 'rxjs/operators';
+import {
+  switchMap,
+  distinctUntilChanged,
+  share,
+  map,
+  filter,
+  tap,
+  startWith
+} from 'rxjs/operators';
+import {
+  Store,
+  State,
+  createFeatureSelector,
+  createSelector
+} from '@ngrx/store';
+import * as entityReducer from './user.reducer';
+import { EntityState } from '@ngrx/entity';
+import { UpsertUsers } from './user.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserSearchService {
-  constructor(private httpClient: HttpClient) {}
-  public getUsers$(): Observable<User[]> {
-    // return this.httpClient
-    //   .get<IUser[]>('https://api.github.com/users')
-    //   .pipe(share());
+  entitySelectState = createFeatureSelector<EntityState<User>>('user');
+  constructor(
+    private httpClient: HttpClient,
+    private entityStore: Store<State<User>>
+  ) {}
 
-    return this.httpClient.get<User[]>('https://api.github.com/users').pipe(
-      switchMap((result: User[]) => {
-        console.log('UserService.getUsers$');
-        return of(result);
+  private httpClientGetUsers$(): Observable<User[]> {
+    const usersFromApi$ = this.httpClient.get<User[]>(
+      'https://api.github.com/users'
+    );
+
+    // return usersFromApi$.pipe(share());
+
+    // return usersFromApi$.pipe(
+    //   switchMap((result: User[]) => {
+    //     console.log('UserService.getUsers$');
+    //     return of(result);
+    //   }),
+    //   distinctUntilChanged(),
+    //   share()
+    // );
+
+    return usersFromApi$;
+  }
+
+  public getUsers$(): Observable<User[]> {
+    const selectAll$ = this.entityStore.select(
+      createSelector(
+        this.entitySelectState,
+        entityReducer.selectAll
+      )
+    );
+
+    const getFromApi$: Observable<User[]> = selectAll$.pipe(
+      map((t: User[]) => {
+        const result = t.length === 0;
+        return result;
+      }),
+      filter((needDataFromApi: boolean) => needDataFromApi),
+      switchMap(() => this.httpClientGetUsers$()),
+      tap((tResponse: User[]) => {
+        this.entityStore.dispatch(new UpsertUsers({ users: tResponse }));
       }),
       distinctUntilChanged(),
+      startWith(null),
       share()
     );
+
+    const tResult$ = this.observableReturnSecond$(getFromApi$, selectAll$);
+
+    return tResult$;
   }
+
+  private observableReturnSecond$ = <First, Second>(
+    first$: Observable<First>,
+    second$: Observable<Second>
+  ): Observable<Second> =>
+    combineLatest(first$, second$, (first, second) => second);
 }
