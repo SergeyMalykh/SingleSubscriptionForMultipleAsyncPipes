@@ -34,4 +34,10 @@ ng g c components/User3
 npm i @ngrx/{store,entity,schematics,store-devtools} --save
 ng generate @ngrx/schematics:store state --root --statePath state --module app.module.ts --dry-run
 ng generate @ngrx/schematics:entity state/User --spec true --flat false --module ../app.module.ts --reducers index.ts --dry-run
-ng generate service state/user/UserSearch --spec false --flat true --dry-run -->
+ng generate service state/user/UserSearch --spec false --flat true --dry-run
+
+https://stackblitz.com/docs
+stackblitz.com/github/SergeyMalykh/SingleSubscriptionForMultipleAsyncPipes
+
+
+ -->
