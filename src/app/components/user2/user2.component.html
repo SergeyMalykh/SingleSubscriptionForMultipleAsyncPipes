@@ -1,0 +1,21 @@
+<div *ngIf="users$ | async as users; else loading">
+  <div class="row" *ngFor="let user of users | slice:2:4">
+    <div class="col">User2 Component</div>
+    <div class="col">User</div>
+    <div class="col">{{user.id}}</div>
+    <div class="col">{{user.login}}</div>
+    <div class="col2"><img class="product-image" [src]="user.avatar_url"></div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="row">
+    <div class="col">User2 Component</div>
+    <div class="col">Loading ...</div>¸
+    <div class="col">Loading ...</div>
+    <div class="col">Loading ...</div>
+    <div class="col2">Loading ...</div>
+  </div>
+</ng-template>
+
+<app-user3></app-user3>

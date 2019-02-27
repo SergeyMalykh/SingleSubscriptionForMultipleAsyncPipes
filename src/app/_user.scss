@@ -1,0 +1,17 @@
+header,
+.row {
+  display: flex;
+  height: 35px;
+}
+
+.col {
+  flex: 1;
+}
+
+.col2 {
+  flex: 3;
+}
+
+.product-image {
+  width: 35px;
+}
