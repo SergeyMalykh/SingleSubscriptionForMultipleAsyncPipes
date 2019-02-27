@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserService } from '@app/services/user/user.service';
 import { Observable } from 'rxjs';
-import { UserSearchService } from 'src/app/state/user/user-search.service';
-import { User } from 'src/app/state/user/user.model';
+import { UserSearchService } from '@app/state/user/user-search.service';
+import { User } from '@app/state/user/user.model';
 
 @Component({
   selector: 'app-user1',

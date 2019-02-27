@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { User } from './user.model';
+import { User } from '@state/user/user.model';
 
 export enum UserActionTypes {
   LoadUsers = '[User] Load Users',
