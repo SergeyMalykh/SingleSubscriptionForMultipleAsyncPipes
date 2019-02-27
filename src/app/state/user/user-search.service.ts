@@ -39,16 +39,16 @@ export class UserSearchService {
 
     // return usersFromApi$.pipe(share());
 
-    // return usersFromApi$.pipe(
-    //   switchMap((result: User[]) => {
-    //     console.log('UserService.getUsers$');
-    //     return of(result);
-    //   }),
-    //   distinctUntilChanged(),
-    //   share()
-    // );
+    return usersFromApi$.pipe(
+      switchMap((result: User[]) => {
+        console.log('UserSearchService.httpClientGetUsers$');
+        return of(result);
+      })
+      // distinctUntilChanged(),
+      // share()
+    );
 
-    return usersFromApi$;
+    // return usersFromApi$;
   }
 
   public getUsers$(): Observable<User[]> {
