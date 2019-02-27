@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+<!--
+ng g s services/user/user --spec false
+ng g c components/User1
+ng g c components/User2
+ng g c components/User3
+npm i @ngrx/{store,entity,schematics,store-devtools} --save
+ng generate @ngrx/schematics:store state --root --statePath state --module app.module.ts --dry-run
+ng generate @ngrx/schematics:entity state/User --spec true --flat false --module ../app.module.ts --reducers index.ts --dry-run
+ng generate service state/user/UserSearch --spec false --flat true --dry-run -->

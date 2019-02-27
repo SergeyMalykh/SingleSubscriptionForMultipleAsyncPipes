@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/app/services/user/user.interface';
+import { UserSearchService } from 'src/app/state/user/user-search.service';
+import { User } from 'src/app/state/user/user.model';
 
 @Component({
   selector: 'app-user3',
@@ -9,11 +10,15 @@ import { IUser } from 'src/app/services/user/user.interface';
   styleUrls: ['./user3.component.scss']
 })
 export class User3Component implements OnInit {
-  public users$: Observable<IUser[]>;
+  public users$: Observable<User[]>;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private userSearchService: UserSearchService
+  ) {}
 
   ngOnInit() {
-    this.users$ = this.userService.getUsers$();
+    // this.users$ = this.userService.getUsers$();
+    this.users$ = this.userSearchService.getUsers$();
   }
 }
